@@ -501,7 +501,7 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
         return builder
                 .setContentTitle("C3 Media Bridge")
                 .setContentText(status)
-                .setSmallIcon(android.R.drawable.stat_sys_data_usb)
+                .setSmallIcon(R.drawable.ic_bridge)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
                 .setContentIntent(contentIntent)

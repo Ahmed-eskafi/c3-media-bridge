@@ -5,11 +5,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
@@ -38,9 +36,9 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
 
     public static final String ACTION_STOP = "com.c3mediabridge.STOP";
     public static final String ACTION_TEST_VOL_UP = "com.c3mediabridge.TEST_VOL_UP";
-    public static final String ACTION_TEST_PLAY_PAUSE = "com.c3mediabridge.TEST_PLAY_PAUSE";\n    public static final String EXTRA_ATTACHED_DEVICE = "com.c3mediabridge.EXTRA_ATTACHED_DEVICE";
+    public static final String ACTION_TEST_PLAY_PAUSE = "com.c3mediabridge.TEST_PLAY_PAUSE";
+    public static final String EXTRA_ATTACHED_DEVICE = "com.c3mediabridge.EXTRA_ATTACHED_DEVICE";
 
-    private static final String ACTION_USB_PERMISSION = "com.c3mediabridge.USB_PERMISSION";
     private static final String CHANNEL_ID = "c3_bridge_channel";
     private static final int NOTIFICATION_ID = 30;
 
@@ -67,32 +65,6 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
         }
     };
 
-    private final BroadcastReceiver permissionReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (!ACTION_USB_PERMISSION.equals(intent.getAction())) {
-                return;
-            }
-
-            UsbDevice device = getUsbDevice(intent);
-            boolean granted = intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false);
-
-            if (device == null || !isC3(device)) {
-                return;
-            }
-
-            permissionRequestedDevice = null;
-
-            if (granted) {
-                permissionDeniedUntilDisconnect = false;
-                openUsb(device);
-            } else {
-                permissionDeniedUntilDisconnect = true;
-                updateNotification("USB permission denied — reconnect C3 to try again");
-            }
-        }
-    };
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -103,15 +75,6 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
 
         createNotificationChannel();
         startForeground(NOTIFICATION_ID, makeNotification("Waiting for ESP32-C3"));
-
-        IntentFilter permissionFilter = new IntentFilter(ACTION_USB_PERMISSION);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(permissionReceiver, permissionFilter, Context.RECEIVER_NOT_EXPORTED);
-        } else {
-            registerReceiver(permissionReceiver, permissionFilter);
-        }
-
         handler.post(usbPoll);
     }
 
@@ -131,7 +94,14 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
             executeCommand("PLAY_PAUSE");
         }
 
-        checkUsbConnection();
+        UsbDevice attached = getAttachedDevice(intent);
+
+        if (attached != null && isC3(attached) && usbManager.hasPermission(attached)) {
+            openUsb(attached);
+        } else {
+            checkUsbConnection();
+        }
+
         return START_STICKY;
     }
 
@@ -141,8 +111,17 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
     }
 
     @SuppressWarnings("deprecation")
-    private UsbDevice getUsbDevice(Intent intent) {
-        return intent == null ? null : intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+    private UsbDevice getAttachedDevice(Intent intent) {
+        if (intent == null) {
+            return null;
+        }
+
+        UsbDevice device = intent.getParcelableExtra(EXTRA_ATTACHED_DEVICE);
+        if (device != null) {
+            return device;
+        }
+
+        return intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
     }
 
     private void checkUsbConnection() {
@@ -154,8 +133,6 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
             }
 
             currentDevice = null;
-            permissionRequestedDevice = null;
-            permissionDeniedUntilDisconnect = false;
             updateNotification("Waiting for ESP32-C3");
             return;
         }
@@ -168,20 +145,13 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
         currentDevice = found;
 
         if (usbManager.hasPermission(found)) {
-            permissionDeniedUntilDisconnect = false;
             openUsb(found);
-            return;
+        } else {
+            // Intentionally do not call UsbManager.requestPermission().
+            // That call is what creates the USB permission popup.
+            // Android grants access when this app handles USB_DEVICE_ATTACHED.
+            updateNotification("USB detected — waiting for Android USB handoff");
         }
-
-        if (permissionDeniedUntilDisconnect) {
-            return;
-        }
-
-        if (found.getDeviceName().equals(permissionRequestedDevice)) {
-            return;
-        }
-
-        requestUsbPermission(found);
     }
 
     private UsbDevice findC3() {
@@ -198,29 +168,9 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
                 device.getProductId() == ESP32_C3_USB_SERIAL_JTAG_PID;
     }
 
-    private void requestUsbPermission(UsbDevice device) {
-        permissionRequestedDevice = device.getDeviceName();
-
-        Intent permissionIntent = new Intent(ACTION_USB_PERMISSION);
-        permissionIntent.setPackage(getPackageName());
-
-        int piFlags = PendingIntent.FLAG_UPDATE_CURRENT;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            piFlags |= PendingIntent.FLAG_MUTABLE;
-        }
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this,
-                0,
-                permissionIntent,
-                piFlags);
-
-        updateNotification("Waiting for USB permission");
-        usbManager.requestPermission(device, pendingIntent);
-    }
-
     private UsbSerialDriver getDriver(UsbDevice device) {
         UsbSerialDriver driver = UsbSerialProber.getDefaultProber().probeDevice(device);
+
         if (driver != null) {
             return driver;
         }
@@ -235,11 +185,17 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
     }
 
     private synchronized void openUsb(UsbDevice device) {
+        if (!usbManager.hasPermission(device)) {
+            updateNotification("USB access not granted");
+            return;
+        }
+
         if (serialPort != null) {
             if (currentDevice != null &&
                     currentDevice.getDeviceName().equals(device.getDeviceName())) {
                 return;
             }
+
             closeUsb();
         }
 
@@ -417,6 +373,7 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
                     } else {
                         controls.play();
                     }
+
                     return true;
 
                 default:
@@ -437,11 +394,11 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
                 continue;
             }
 
-            int s = state.getState();
+            int currentState = state.getState();
 
-            if (s == PlaybackState.STATE_PLAYING ||
-                    s == PlaybackState.STATE_BUFFERING ||
-                    s == PlaybackState.STATE_CONNECTING) {
+            if (currentState == PlaybackState.STATE_PLAYING ||
+                    currentState == PlaybackState.STATE_BUFFERING ||
+                    currentState == PlaybackState.STATE_CONNECTING) {
                 return controller;
             }
         }
@@ -472,7 +429,8 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
                 "C3 Media Bridge",
                 NotificationManager.IMPORTANCE_LOW);
 
-        channel.setDescription("Keeps the ESP32-C3 USB media bridge running in the background");
+        channel.setDescription(
+                "Keeps the ESP32-C3 USB media bridge running in the background");
 
         NotificationManager manager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -483,13 +441,15 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
     private Notification makeNotification(String status) {
         Intent openApp = new Intent(this, MainActivity.class);
 
+        int immutableFlag = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                ? PendingIntent.FLAG_IMMUTABLE
+                : 0;
+
         PendingIntent contentIntent = PendingIntent.getActivity(
                 this,
                 0,
                 openApp,
-                PendingIntent.FLAG_UPDATE_CURRENT |
-                        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                                ? PendingIntent.FLAG_IMMUTABLE : 0));
+                PendingIntent.FLAG_UPDATE_CURRENT | immutableFlag);
 
         Notification.Builder builder = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
                 ? new Notification.Builder(this, CHANNEL_ID)
@@ -518,6 +478,7 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
                 ioManager.stop();
             } catch (Exception ignored) {
             }
+
             ioManager = null;
         }
 
@@ -526,6 +487,7 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
                 serialPort.close();
             } catch (Exception ignored) {
             }
+
             serialPort = null;
         }
 
@@ -535,12 +497,6 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
     @Override
     public void onDestroy() {
         handler.removeCallbacks(usbPoll);
-
-        try {
-            unregisterReceiver(permissionReceiver);
-        } catch (Exception ignored) {
-        }
-
         closeUsb();
         super.onDestroy();
     }

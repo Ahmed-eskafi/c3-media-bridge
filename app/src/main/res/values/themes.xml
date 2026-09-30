@@ -3,4 +3,4 @@
         <item name="android:fontFamily">sans</item>
         <item name="android:colorAccent">#444444</item>
     </style>
-</resources>
+    <style name="NoDisplayTheme" parent="android:style/Theme.NoDisplay" />\n</resources>

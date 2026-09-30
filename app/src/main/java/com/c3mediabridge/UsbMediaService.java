@@ -38,7 +38,7 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
 
     public static final String ACTION_STOP = "com.c3mediabridge.STOP";
     public static final String ACTION_TEST_VOL_UP = "com.c3mediabridge.TEST_VOL_UP";
-    public static final String ACTION_TEST_PLAY_PAUSE = "com.c3mediabridge.TEST_PLAY_PAUSE";
+    public static final String ACTION_TEST_PLAY_PAUSE = "com.c3mediabridge.TEST_PLAY_PAUSE";\n    public static final String EXTRA_ATTACHED_DEVICE = "com.c3mediabridge.EXTRA_ATTACHED_DEVICE";
 
     private static final String ACTION_USB_PERMISSION = "com.c3mediabridge.USB_PERMISSION";
     private static final String CHANNEL_ID = "c3_bridge_channel";
@@ -58,9 +58,6 @@ public class UsbMediaService extends Service implements SerialInputOutputManager
 
     private final StringBuilder serialText = new StringBuilder();
     private final Handler handler = new Handler(Looper.getMainLooper());
-
-    private String permissionRequestedDevice = null;
-    private boolean permissionDeniedUntilDisconnect = false;
 
     private final Runnable usbPoll = new Runnable() {
         @Override

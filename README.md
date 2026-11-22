@@ -65,7 +65,7 @@ The project uses Gradle and Java. Build a debug APK locally with:
 gradle :app:assembleDebug
 ```
 
-Or run the **Build Android APK** workflow from the repository's Actions tab. When successful, the workflow uploads an artifact named **C3-Media-Bridge-APK**.
+Or download the latest debug APK from the [Build Android APK workflow](https://github.com/Ahmed-eskafi/c3-media-bridge/actions/workflows/build-apk.yml). Open the latest successful run, then download the **C3-Media-Bridge-APK** artifact.
 
 ## Tools and technologies
 

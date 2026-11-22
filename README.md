@@ -24,12 +24,12 @@ C3 Media Bridge is an Android companion application for an **ESP32-C3 Super Mini
 
 ## Project photos
 
-These reference photos show the real-world components and installation style used by this project. Images are hosted by their original publishers; availability depends on those sites allowing external image embedding.
+These reference photos show the real-world components and installation style used by this project. The Mazda head-unit photo is stored directly in this GitHub repository; the other component photos are embedded from their original publishers.
 
 ### Android car head unit
 
 <p align="center">
-  <img src="docs/images/mazda-android-head-unit.jpg" alt="Android multimedia head unit for a Mazda dashboard" width="82%">
+  <img src="https://raw.githubusercontent.com/Ahmed-eskafi/c3-media-bridge/main/docs/images/mazda-android-head-unit.jpg" alt="Android multimedia head unit for a Mazda dashboard" width="82%">
 </p>
 <sub>Project reference image: Android multimedia head unit supplied for this project.</sub>
 

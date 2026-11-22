@@ -22,6 +22,39 @@ C3 Media Bridge is an Android companion application for an **ESP32-C3 Super Mini
 
 **Signal path:** BLE media remote → ESP32-C3 Super Mini → USB Serial → Android car head unit.
 
+## Project photos
+
+These reference photos show the real-world components and installation style used by this project. Images are hosted by their original publishers; availability depends on those sites allowing external image embedding.
+
+### Android car head unit
+
+<p align="center">
+  <a href="https://www.civicx.com/forum/threads/9-aftermarket-android-head-unit-feature-overview-installation.17034/page-111">
+    <img src="https://www.civicx.com/forum/attachments/00606f0c-acda-4cbe-928d-80542af5b74e-jpeg.321212/" alt="Aftermarket Android head unit installed in a car dashboard" width="82%">
+  </a>
+</p>
+<sub>Photo: CivicX forum installation thread.</sub>
+
+### ESP32-C3 Super Mini board
+
+<p align="center">
+  <a href="https://zaitronics.com.au/products/esp32-c3-supermini-wi-fi-bluetooth-development-board">
+    <img src="https://zaitronics.com.au/cdn/shop/files/1-10PCS-ESP32-C3-Development-Board-ESP32-C3-SuperMini-WiFi-4M-Bluetooth-For-Arduino_jpg.png?v=1721795578&width=1445" alt="ESP32-C3 Super Mini development board, front and back" width="48%">
+  </a>
+</p>
+<sub>Product photo: Zaitronics ESP32-C3 SuperMini listing.</sub>
+
+### BLE media remote
+
+<p align="center">
+  <a href="https://www.ebay.com/itm/364579185761">
+    <img src="https://i.ebayimg.com/images/g/XbcAAOSwAGNip~ZU/s-l1200.jpg" alt="Bluetooth steering wheel media remote control" width="48%">
+  </a>
+</p>
+<sub>Product photo: eBay listing for a Bluetooth steering-wheel media remote.</sub>
+
+For image source links and usage notes, see [Image Credits](docs/IMAGE_CREDITS.md).
+
 ## Features
 
 - USB serial communication with the ESP32-C3 (USB VID `0x303A`, PID `0x1001`).

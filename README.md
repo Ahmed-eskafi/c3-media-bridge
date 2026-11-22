@@ -97,7 +97,9 @@ docs/
 
 ## Project status
 
-This repository contains the Android receiver application and its automated debug-build workflow. The ESP32-C3 firmware that scans/connects to the BLE remote and sends the serial commands is a separate part of the hardware setup and is not included here.
+The Android debug APK build completed successfully in GitHub Actions on 22 November 2026. This confirms compilation and packaging only; end-to-end operation on a physical car head unit still requires hardware validation. The repository contains the Android receiver application. ESP32-C3 firmware for BLE remote pairing and serial command transmission is separate and is not included here.
+
+See [Testing and Compatibility](docs/TESTING.md) for the manual hardware-validation checklist.
 
 ## Release downloads
 

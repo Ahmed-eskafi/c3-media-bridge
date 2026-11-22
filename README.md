@@ -29,11 +29,11 @@ These reference photos show the real-world components and installation style use
 ### Android car head unit
 
 <p align="center">
-  <a href="https://www.civicx.com/forum/threads/9-aftermarket-android-head-unit-feature-overview-installation.17034/page-111">
-    <img src="https://www.civicx.com/forum/attachments/00606f0c-acda-4cbe-928d-80542af5b74e-jpeg.321212/" alt="Aftermarket Android head unit installed in a car dashboard" width="82%">
+  <a href="https://www.navicars.com.tr/detay-mazda-3-10-12-android-multimedya-4-32-8-cek-carplay--qled-ekran--ahd-geri-gorus-kamerasi-3-amfi-cikisli-pro-cihaz-13273.html">
+    <img src="https://www.navicars.com.tr/dosyalar/site_resim/urunler/buyuk/7CJ8364.JPG" alt="Android touchscreen head unit installed in a Mazda 3 dashboard" width="82%">
   </a>
 </p>
-<sub>Photo: CivicX forum installation thread.</sub>
+<sub>Photo: Mazda 3 Android multimedia installation, NaviCars.</sub>
 
 ### ESP32-C3 Super Mini board
 

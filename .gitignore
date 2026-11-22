@@ -1,0 +1,20 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Android Studio
+.idea/
+*.iml
+local.properties
+.cxx/
+.externalNativeBuild/
+
+# Signing material
+*.jks
+*.keystore
+keystore.properties
+
+# OS/editor files
+.DS_Store
+Thumbs.db

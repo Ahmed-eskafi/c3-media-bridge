@@ -168,7 +168,8 @@ app/src/main/
 └── res/
 
 docs/
-└── c3-media-bridge-diagram.svg
+└── images/
+    └── mazda-android-head-unit.jpg
 ```
 
 ## Project status

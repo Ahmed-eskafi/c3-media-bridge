@@ -16,44 +16,13 @@ C3 Media Bridge is an Android companion application for an **ESP32-C3 Super Mini
 
 ## System diagram
 
-The flow below uses **real product photographs** for each physical component instead of illustrated device shapes.
+The diagram below shows the real hardware components as connected stages, with arrows identifying how commands travel through the system.
 
-<table>
-  <tr>
-    <td align="center" width="23%">
-      <img src="https://i.ebayimg.com/images/g/J5MAAOSwDe9iqC-I/s-l960.jpg" alt="Real Bluetooth steering-wheel media remote" width="150">
-    </td>
-    <td align="center" width="6%">
-      <strong>BLE<br>→</strong>
-    </td>
-    <td align="center" width="23%">
-      <img src="https://zaitronics.com.au/cdn/shop/files/1-10PCS-ESP32-C3-Development-Board-ESP32-C3-SuperMini-WiFi-4M-Bluetooth-For-Arduino_jpg.png?v=1721795578&amp;width=1445" alt="Real ESP32-C3 SuperMini development board" width="145">
-    </td>
-    <td align="center" width="6%">
-      <strong>USB<br>→</strong>
-    </td>
-    <td align="center" width="18%">
-      <img src="https://media.takealot.com/covers_images/4dc2c5e552a04144992f64cb07323f65/s-zoom.file" alt="Real USB-C to USB-A data cable" width="135">
-    </td>
-    <td align="center" width="6%">
-      <strong>→</strong>
-    </td>
-    <td align="center" width="18%">
-      <img src="https://raw.githubusercontent.com/Ahmed-eskafi/c3-media-bridge/main/docs/images/mazda-android-head-unit.jpg" alt="Android car head unit photo supplied for this project" width="150">
-    </td>
-  </tr>
-  <tr>
-    <td align="center"><strong>BLE Media Remote</strong></td>
-    <td></td>
-    <td align="center"><strong>ESP32-C3 Super Mini</strong></td>
-    <td></td>
-    <td align="center"><strong>USB Data Cable</strong></td>
-    <td></td>
-    <td align="center"><strong>Android Car Head Unit</strong></td>
-  </tr>
-</table>
+<p align="center">
+  <img src="docs/c3-media-bridge-system-flow.svg" alt="Photo-based C3 Media Bridge system flowchart: BLE media remote to ESP32-C3 Super Mini to USB data cable to Android car head unit" width="100%">
+</p>
 
-**Signal path:** BLE media remote → ESP32-C3 Super Mini → USB Serial → Android car head unit running C3 Media Bridge.
+**Signal path:** BLE media remote → ESP32-C3 Super Mini → USB Serial (115200 baud) → Android car head unit running C3 Media Bridge.
 
 **Commands:** Play/Pause · Next · Previous · Volume +/−.
 

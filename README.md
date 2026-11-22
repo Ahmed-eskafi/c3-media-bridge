@@ -29,11 +29,11 @@ These reference photos show the real-world components and installation style use
 ### Android car head unit
 
 <p align="center">
-  <a href="https://androidscreens.com/products/mazda-3-2010-2013-android-screen">
-    <img src="https://androidscreens.com/cdn/shop/files/maxresdefault_a14a46ce-f64e-4536-adc5-7201d8e94d27.jpg?v=1700736276&width=1445" alt="Android touchscreen head unit visibly installed in a Mazda 3 dashboard" width="82%">
+  <a href="https://www.navicars.com.tr/detay-mazda-3-10-12-android-multimedya-4-32-8-cek-carplay--qled-ekran--ahd-geri-gorus-kamerasi-3-amfi-cikisli-pro-cihaz-13273.html">
+    <img src="https://www.navicars.com.tr/dosyalar/site_resim/urunler/buyuk/7CJ8364.JPG" alt="Mazda 3 with Android touchscreen head unit and left-hand steering wheel" width="82%">
   </a>
 </p>
-<sub>Photo: Mazda 3 (2010–2013) Android screen installation, Android Screens.</sub>
+<sub>Photo: Mazda 3 Android multimedia installation, showing the steering wheel on the left side.</sub>
 
 ### ESP32-C3 Super Mini board
 

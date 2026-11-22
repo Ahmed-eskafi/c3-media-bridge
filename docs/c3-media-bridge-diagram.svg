@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+<title id="title">C3 Media Bridge system diagram</title>
+<desc id="desc">A BLE media remote sends commands to an ESP32-C3 Super Mini, which connects by USB serial to an Android car head unit.</desc>
+<defs>
+  <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101827"/><stop offset="1" stop-color="#172b43"/></linearGradient>
+  <linearGradient id="blue" x2="1"><stop stop-color="#20b8ef"/><stop offset="1" stop-color="#3978ff"/></linearGradient>
+  <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity=".28"/></filter>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#45baff"/></marker>
+</defs>
+<rect width="1200" height="520" rx="28" fill="url(#bg)"/>
+<text x="600" y="58" fill="#fff" font-family="Arial,sans-serif" font-size="34" font-weight="700" text-anchor="middle">C3 MEDIA BRIDGE</text>
+<text x="600" y="91" fill="#a9c2dd" font-family="Arial,sans-serif" font-size="17" text-anchor="middle">BLE media controls → USB media control for Android car head units</text>
+<!-- remote -->
+<g filter="url(#shadow)">
+ <rect x="55" y="165" width="205" height="230" rx="28" fill="#202b3b" stroke="#4c657e" stroke-width="2"/>
+ <rect x="119" y="185" width="77" height="77" rx="38" fill="#111a27" stroke="#6e8299"/>
+ <path d="M157 202v43m-15-15 15 15 15-15" stroke="#e9f4ff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+ <text x="157" y="292" fill="#fff" font-family="Arial,sans-serif" font-size="19" font-weight="700" text-anchor="middle">BLE MEDIA</text>
+ <text x="157" y="317" fill="#fff" font-family="Arial,sans-serif" font-size="19" font-weight="700" text-anchor="middle">REMOTE</text>
+ <text x="157" y="350" fill="#9ec9ef" font-family="Arial,sans-serif" font-size="14" text-anchor="middle">Play • Pause • Next</text>
+ <text x="157" y="371" fill="#9ec9ef" font-family="Arial,sans-serif" font-size="14" text-anchor="middle">Previous • Volume</text>
+</g>
+<!-- BLE arrow -->
+<path d="M275 280H365" stroke="#45baff" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="320" y="252" fill="#6bcfff" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle">BLE</text>
+<!-- esp -->
+<g filter="url(#shadow)">
+ <rect x="390" y="155" width="220" height="250" rx="24" fill="#1b2938" stroke="#4c657e" stroke-width="2"/>
+ <rect x="452" y="178" width="96" height="166" rx="10" fill="#101820" stroke="#d3aa4a" stroke-width="3"/>
+ <rect x="475" y="203" width="50" height="60" rx="6" fill="#29394b" stroke="#61758a"/>
+ <text x="500" y="290" fill="#dceeff" font-family="Arial,sans-serif" font-size="13" text-anchor="middle">ESP32</text>
+ <text x="500" y="310" fill="#dceeff" font-family="Arial,sans-serif" font-size="13" text-anchor="middle">C3</text>
+ <text x="500" y="374" fill="#fff" font-family="Arial,sans-serif" font-size="19" font-weight="700" text-anchor="middle">ESP32-C3</text>
+ <text x="500" y="396" fill="#9ec9ef" font-family="Arial,sans-serif" font-size="15" text-anchor="middle">Super Mini</text>
+</g>
+<!-- USB arrow -->
+<path d="M625 280H720" stroke="#45baff" stroke-width="5" marker-end="url(#arrow)"/>
+<text x="672" y="252" fill="#6bcfff" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle">USB SERIAL</text>
+<!-- head unit -->
+<g filter="url(#shadow)">
+ <rect x="750" y="150" width="390" height="260" rx="28" fill="#202b39" stroke="#8797a8" stroke-width="3"/>
+ <rect x="775" y="177" width="340" height="205" rx="13" fill="#070e18" stroke="#4a5b70" stroke-width="2"/>
+ <rect x="796" y="197" width="298" height="164" rx="8" fill="#132b43"/>
+ <text x="945" y="226" fill="#b6dfff" font-family="Arial,sans-serif" font-size="16" text-anchor="middle">ANDROID CAR STEREO</text>
+ <circle cx="945" cy="276" r="27" fill="#1f5e9c"/>
+ <path d="M936 258v36l29-18z" fill="#fff"/>
+ <rect x="827" y="319" width="236" height="7" rx="4" fill="#48637f"/>
+ <rect x="827" y="319" width="112" height="7" rx="4" fill="#35b8f2"/>
+ <path d="M850 347h-18m0 0 9-9m-9 9 9 9M1042 338v18m-9-9h18" stroke="#d6eaff" stroke-width="3" fill="none" stroke-linecap="round"/>
+ <text x="945" y="445" fill="#fff" font-family="Arial,sans-serif" font-size="20" font-weight="700" text-anchor="middle">ANDROID HEAD UNIT</text>
+</g>
+<rect x="170" y="470" width="860" height="32" rx="16" fill="#123b5a" stroke="url(#blue)"/>
+<text x="600" y="492" fill="#e9f6ff" font-family="Arial,sans-serif" font-size="16" font-weight="700" text-anchor="middle">Media actions: Play/Pause • Next • Previous • Volume +/−</text>
+</svg>

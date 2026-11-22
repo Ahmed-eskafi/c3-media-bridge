@@ -45,11 +45,20 @@ These reference photos show the real-world components and installation style use
 ### BLE media remote
 
 <p align="center">
-  <a href="https://www.ebay.com/itm/364579185761">
-    <img src="https://i.ebayimg.com/images/g/XbcAAOSwAGNip~ZU/s-l1200.jpg" alt="Bluetooth steering wheel media remote control" width="48%">
+  <a href="https://www.ebay.com/itm/284854970135">
+    <img src="https://i.ebayimg.com/images/g/J5MAAOSwDe9iqC-I/s-l960.jpg" alt="Bluetooth steering wheel media remote control" width="48%">
   </a>
 </p>
 <sub>Product photo: eBay listing for a Bluetooth steering-wheel media remote.</sub>
+
+### USB data cable
+
+<p align="center">
+  <a href="https://fleetnetwork.ca/tripp-lite-series-u428-c03-g2-usb-type-c-to-usb-type-a-cable-m-m-usb-if-certified-3-ft-3-ft-0-91-m-usb-data-transfer-cable-for-u428-c03-g2/">
+    <img src="https://cdn11.bigcommerce.com/s-xwx16vh8tc/images/stencil/1280x1280/products/445294/2859217/Tripp_Lite_by_Eaton_U428-C03-G2_USB_Type-C_to_USB_Type-A_Cable_MM_USB-IF_Certified_3_ft_-_3_ft_USB_Data_Transfer_Cable_for_Hard_-_U428-C03-G2_fleetnetwork_20250212204116__84280.1739476723.jpg?c=2" alt="USB-C to USB-A data cable used for the USB serial connection" width="48%">
+  </a>
+</p>
+<sub>Product photo: Tripp Lite USB-C to USB-A data cable. Use a cable that supports data transfer, not charging only.</sub>
 
 For image source links and usage notes, see [Image Credits](docs/IMAGE_CREDITS.md).
 

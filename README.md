@@ -1,21 +1,29 @@
 # C3 Media Bridge
 
 <p align="center">
-  <strong>Control Android media playback and music volume using an ESP32-C3 over USB serial.</strong>
+  <strong>Use a BLE media remote to control an Android car head unit through an ESP32-C3 and USB.</strong>
 </p>
 
 <p align="center">
-  <img alt="Platform" src="https://img.shields.io/badge/Platform-Android-3DDC84?logo=android&logoColor=white">
+  <img alt="Android" src="https://img.shields.io/badge/Platform-Android-3DDC84?logo=android&logoColor=white">
   <img alt="Hardware" src="https://img.shields.io/badge/Hardware-ESP32--C3-E7352C?logo=espressif&logoColor=white">
   <img alt="Language" src="https://img.shields.io/badge/Language-Java-ED8B00?logo=openjdk&logoColor=white">
-  <img alt="Build" src="https://img.shields.io/badge/Build-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white">
+  <img alt="Build" src="https://img.shields.io/badge/Build-Gradle-02303A?logo=gradle&logoColor=white">
 </p>
 
-C3 Media Bridge is an Android companion app for an **ESP32-C3 Super Mini** media-control bridge. It listens for newline-delimited commands over the ESP32-C3 USB Serial/JTAG interface and translates them into Android volume and media actions.
+C3 Media Bridge is an Android companion application for an **ESP32-C3 Super Mini** media-control bridge. A BLE media remote sends control commands to the ESP32-C3. The board forwards those commands to an Android device over USB serial, where the app translates them into media and volume actions. The intended Android device is an **Android car stereo / head unit**, not a phone.
+
+## System diagram
+
+<p align="center">
+  <img src="docs/c3-media-bridge-diagram.svg" alt="BLE media remote to ESP32-C3 to USB serial to Android car head unit" width="100%">
+</p>
+
+**Signal path:** BLE media remote → ESP32-C3 Super Mini → USB Serial → Android car head unit.
 
 ## Features
 
-- USB serial communication with the ESP32-C3 (VID `0x303A`, PID `0x1001`).
+- USB serial communication with the ESP32-C3 (USB VID `0x303A`, PID `0x1001`).
 - Music volume up and down.
 - Play/pause, next track, and previous track controls.
 - Background foreground-service to keep the bridge available while the app UI is closed.
@@ -23,25 +31,6 @@ C3 Media Bridge is an Android companion app for an **ESP32-C3 Super Mini** media
 - Optional media-session access for controlling the active media session.
 - Test buttons for volume up and play/pause.
 - GitHub Actions workflow to build a debug APK.
-
-## How it works
-
-```text
-Remote / Controller
-       |
-       v
-   ESP32-C3
-       |  USB Serial (115200 baud)
-       |  newline-delimited commands
-       v
- Android C3 Media Bridge
-       |
-       +----> Volume controls
-       |
-       +----> Active media session
-       |
-       +----> Android media-key fallback
-```
 
 ## Supported serial commands
 
@@ -55,27 +44,39 @@ Send one command per line, terminated with a newline:
 | `NEXT` | Skip to next track |
 | `PREVIOUS` | Go to previous track |
 
-The serial connection is configured for **115200 baud, 8 data bits, no parity, and 1 stop bit (8N1)**.
+Serial settings: **115200 baud, 8 data bits, no parity, 1 stop bit (8N1)**.
 
-## Android setup
+## Android car head unit setup
 
-1. Build and install the debug APK on an Android device that supports USB host mode.
-2. Connect the ESP32-C3 to the Android device using a suitable USB data cable or adapter.
-3. Open the app and allow notification permission if Android requests it.
-4. Enable **Media / Notification Access** in Android settings when you want the app to control the active media session.
-5. Connect the ESP32-C3 and send one of the supported serial commands.
+1. Build and install the debug APK on an Android car head unit that supports USB host mode and USB accessories.
+2. Connect the ESP32-C3 to the head unit using a suitable USB data cable or adapter.
+3. Open the app and grant notification permission if Android requests it.
+4. Enable **Media / Notification Access** in Android settings when active media-session control is required.
+5. Pair the BLE media remote with the ESP32-C3 firmware.
+6. Send one of the supported serial commands and test playback and volume.
 
-The app displays its current bridge status in an ongoing notification. Android may require USB-device permission or user confirmation depending on the device and USB handoff flow.
+Compatibility depends on the head unit's Android version, USB host implementation, permissions, and media-session behavior. Some head units may require a USB adapter or manual permission approval.
 
 ## Build
 
-The project uses Gradle and Java. You can build a debug APK locally with:
+The project uses Gradle and Java. Build a debug APK locally with:
 
 ```bash
 gradle :app:assembleDebug
 ```
 
-Or run the **Build Android APK** workflow from the repository's Actions tab. The workflow uploads an artifact named **C3-Media-Bridge-APK** when the build succeeds.
+Or run the **Build Android APK** workflow from the repository's Actions tab. When successful, the workflow uploads an artifact named **C3-Media-Bridge-APK**.
+
+## Tools and technologies
+
+- **Android Studio** — recommended IDE for opening, editing, and building the Android project.
+- **Java** — Android application source language.
+- **Android SDK** — platform APIs and build tools.
+- **Gradle** — project build system.
+- **USB Serial for Android** — serial communication with the ESP32-C3.
+- **Git and GitHub** — source control and project hosting.
+- **GitHub Actions** — automated debug APK build workflow.
+- **Arduino IDE** — useful for developing/flashing the separate ESP32-C3 firmware; the firmware is not included in this Android application repository.
 
 ## Project structure
 
@@ -89,20 +90,18 @@ app/src/main/
 │   ├── BootReceiver.java
 │   └── MediaNotificationListener.java
 └── res/
+
+docs/
+└── c3-media-bridge-diagram.svg
 ```
 
-## Tech stack
+## Project status
 
-- Android SDK
-- Java
-- Gradle
-- USB Serial for Android
-- Android MediaSession and AudioManager APIs
-- GitHub Actions
+This repository contains the Android receiver application and its automated debug-build workflow. The ESP32-C3 firmware that scans/connects to the BLE remote and sends the serial commands is a separate part of the hardware setup and is not included here.
 
-## Status
+## Release downloads
 
-This repository contains the Android receiver application and its automated debug-build workflow. The ESP32-C3 firmware that sends the serial commands is a separate part of the hardware setup.
+Check the [Releases page](https://github.com/Ahmed-eskafi/c3-media-bridge/releases) for published builds. A release APK should only be listed after a successful build and validation.
 
 ## Author
 

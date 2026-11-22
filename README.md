@@ -9,6 +9,7 @@
   <img alt="Hardware" src="https://img.shields.io/badge/Hardware-ESP32--C3-E7352C?logo=espressif&logoColor=white">
   <img alt="Language" src="https://img.shields.io/badge/Language-Java-ED8B00?logo=openjdk&logoColor=white">
   <img alt="Build" src="https://img.shields.io/badge/Build-Gradle-02303A?logo=gradle&logoColor=white">
+  <a href="https://github.com/Ahmed-eskafi/c3-media-bridge/actions/workflows/build-apk.yml"><img alt="Build Android APK" src="https://github.com/Ahmed-eskafi/c3-media-bridge/actions/workflows/build-apk.yml/badge.svg"></a>
 </p>
 
 C3 Media Bridge is an Android companion application for an **ESP32-C3 Super Mini** media-control bridge. A BLE media remote sends control commands to the ESP32-C3. The board forwards those commands to an Android device over USB serial, where the app translates them into media and volume actions. The intended Android device is an **Android car stereo / head unit**, not a phone.
@@ -99,7 +100,7 @@ docs/
 
 The Android debug APK build completed successfully in GitHub Actions on 22 November 2026. This confirms compilation and packaging only; end-to-end operation on a physical car head unit still requires hardware validation. The repository contains the Android receiver application. ESP32-C3 firmware for BLE remote pairing and serial command transmission is separate and is not included here.
 
-See [Testing and Compatibility](docs/TESTING.md) for the manual hardware-validation checklist.
+See [Testing and Compatibility](docs/TESTING.md) for the manual hardware-validation checklist and [Release Checklist](docs/RELEASE_CHECKLIST.md) before publishing a production build.
 
 ## Release downloads
 
